@@ -12,7 +12,6 @@ public class CatalogApiBenchmark
         var response = await _httpClient.GetAsync("/Catalog/GetProduct");
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
-        // Optionally process the content
     }
 
     [Benchmark]
@@ -21,6 +20,5 @@ public class CatalogApiBenchmark
         var response = await _httpClient.GetAsync("/Catalog/GetProductString");
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
-        // Optionally process the content
     }
 }
