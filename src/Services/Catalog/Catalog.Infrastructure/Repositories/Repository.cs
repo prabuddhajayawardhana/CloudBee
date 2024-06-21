@@ -23,6 +23,8 @@ internal class Repository<T> : IRepository<T> where T : class
 
     public async Task CreateAsync(T newEntity) =>
         await _mongoCollection.InsertOneAsync(newEntity);
+    public async Task CreateAsync(List<T> newEntity) =>
+        await _mongoCollection.InsertManyAsync(newEntity);
 
     public async Task UpdateAsync(Expression<Func<T, bool>> predicate, T updatedEntity)
     {

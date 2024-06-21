@@ -1,4 +1,5 @@
 ﻿using Catalog.Domain;
+using Catalog.Domain.DTO;
 using Catalog.Domain.Entities;
 using MongoDB.Bson;
 
@@ -8,19 +9,21 @@ internal sealed class ProductService(ICloudBeeServiceProvider beeServiceProvider
 {
     private readonly ICloudBeeServiceProvider _beeServiceProvider = beeServiceProvider;
 
-    public async Task CreateProductsAsync()
+    public async Task CreateProductsAsync(List<ProductDto> products)
     {
-        var productData = new Product
+        if (products is not null)
         {
-            Id = ObjectId.GenerateNewId().ToString(),
-            Name = "Sample Product",
-            Description = "This is a sample product description.",
-            Category = "Sample Category",
-            Image = "sample-image-url",
-            Price = 99.99M
-        };
+            var productList = products.Select(c => new Product
+            {
+                Name = c.Name,
+                Category = c.Category,
+                Description = c.Description,
+                Image = c.Image,
+                Price = c.Price,
+            }).ToList();
 
-        await _beeServiceProvider.Products.CreateAsync(productData);
+            await _beeServiceProvider.Products.CreateAsync(productList);
+        }
     }
 
     public async Task<List<Product>> GetAllProductsAsync()

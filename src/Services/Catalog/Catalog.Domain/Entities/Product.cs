@@ -7,7 +7,7 @@ public sealed record Product
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public required string Id { get; set; }
+    public string? Id { get; set; }
 
     [BsonElement("Name")]
     public required string Name { get; set; }
